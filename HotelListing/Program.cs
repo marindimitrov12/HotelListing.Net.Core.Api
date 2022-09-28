@@ -1,3 +1,6 @@
+using HotelListing.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -13,6 +16,7 @@ Log.Logger = new LoggerConfiguration()
   
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("sqlConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 builder.Host.UseSerilog();
 
 // Add services to the container.
@@ -28,6 +32,10 @@ builder.Services.AddCors(o => {
         .AllowAnyHeader();
         });
 
+});
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options.UseSqlServer(connectionString );
 });
 
 
@@ -51,7 +59,7 @@ try
     app.Run();
 }
 catch(Exception ex)
-{
+{ 
     Log.Fatal(ex,"Application Failed to start");
 }
 finally
