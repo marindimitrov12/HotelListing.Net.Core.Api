@@ -1,3 +1,4 @@
+using HotelListing.Configurations;
 using HotelListing.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
@@ -33,6 +34,7 @@ builder.Services.AddCors(o => {
         });
 
 });
+builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlServer(connectionString );
