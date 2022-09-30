@@ -1,3 +1,4 @@
+using HotelListing;
 using HotelListing.Configurations;
 using HotelListing.Data;
 using HotelListing.IRepository;
@@ -23,10 +24,12 @@ var connectionString = builder.Configuration.GetConnectionString("sqlConnection"
 builder.Host.UseSerilog();
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(o => {
     o.AddPolicy("CorsPolicy", builder => {
