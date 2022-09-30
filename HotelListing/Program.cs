@@ -1,5 +1,7 @@
 using HotelListing.Configurations;
 using HotelListing.Data;
+using HotelListing.IRepository;
+using HotelListing.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +37,9 @@ builder.Services.AddCors(o => {
 
 });
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddControllers().AddNewtonsoftJson(op=>
+op.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlServer(connectionString );
@@ -53,7 +58,6 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 app.UseAuthorization();
-
 app.MapControllers();
 try
 {
