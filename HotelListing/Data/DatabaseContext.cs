@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using HotelListing.Configurations.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.Data
@@ -13,50 +14,9 @@ namespace HotelListing.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Country>().HasData(
-                new Country
-                {
-                    Id=1,
-                    Name="Jamaica",
-                    ShortName="JM"
-                },
-                 new Country
-                 {
-                     Id = 2,
-                     Name = "Bahamas",
-                     ShortName = "BS"
-                 },
-                 new Country
-                 {
-                     Id = 3,
-                     Name = "Cayman Island",
-                     ShortName = "CI"
-                 });
-            builder.Entity<Hotel>().HasData(
-                new Hotel
-                {
-                    Id = 1,
-                    Name = "Maxxi",
-                    Address = "Agril",
-                    CountryId=1,
-                    Rating=4.5,
-                },
-               new Hotel
-               {
-                   Id = 2,
-                   Name = "Sandals Resort and Spa",
-                   Address = "Negril",
-                   CountryId = 2,
-                   Rating = 1.5,
-               },
-                new Hotel
-                {
-                    Id = 3,
-                    Name = "Grand Palldium",
-                    Address = "Negril",
-                    CountryId = 3,
-                    Rating = 5.5,
-                });
+            builder.ApplyConfiguration(new RoleConfigurations());
+            builder.ApplyConfiguration(new CountryConfiguration());
+            builder.ApplyConfiguration(new HotelConfiguration());
         }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
