@@ -35,7 +35,7 @@ namespace HotelListing.Controllers
             }
             try
             {
-                var user=_mapper.Map<ApiUser>(userDTO);
+                var user=_mapper.Map<ApiUser>(userDTO);  
                 user.UserName = userDTO.Email;
                 var result=await _userManager.CreateAsync(user,userDTO.Password);
                 if (!result.Succeeded)
