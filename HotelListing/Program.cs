@@ -3,6 +3,7 @@ using HotelListing.Configurations;
 using HotelListing.Data;
 using HotelListing.IRepository;
 using HotelListing.Repository;
+using HotelListing.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,10 +28,12 @@ builder.Host.UseSerilog();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
+builder.Services.AddScoped<IAuthManager,AuthManager>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
+builder.Services.ConficureJWt(builder.Configuration);
 builder.Services.AddCors(o => {
     o.AddPolicy("CorsPolicy", builder => {
         builder.AllowAnyOrigin()
