@@ -28,34 +28,25 @@ namespace HotelListing.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountries([FromQuery]RequestParams requestParams)
         {
-            try
-            {
+           
                 var countries = await _unitOfWork.Countries.GetPagedList(requestParams);
                 var result = _mapper.Map<List<CountryDTO>>(countries);
                 return Ok(result);   
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex,$"Something Went Wrong in the {nameof(GetCountries)}");
-                return StatusCode(500,"Internal Servaer Error.Please Try Again Later.");
-            }
+           
+          
         }
         [HttpGet("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountry(int id)
         {
-            try
-            {
+            
+            
                 var country = await _unitOfWork.Countries.Get(q=>q.Id==id,new List<string> { "Hotels"});
                 var result = _mapper.Map<CountryDTO>(country);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetCountry)}");
-                return StatusCode(500, "Internal Servaer Error.Please Try Again Later.");
-            }
+            
+           
         }
         [Authorize(Roles = "Administrator")]
         [HttpPost]
@@ -69,18 +60,13 @@ namespace HotelListing.Controllers
                 _logger.LogError($"Invalid POST attempt in {nameof(CreateCountry)}");
                 return BadRequest(ModelState);
             }
-            try
-            {
+          
                 var country = _mapper.Map<Country>(countryDTO);
                 await _unitOfWork.Countries.Insert(country);
                 await _unitOfWork.Save();
                 return CreatedAtRoute("GetHotel", new { id = country.Id }, country);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(CreateCountry)} ");
-                return StatusCode(500, "Internal Server Error.Please Try Again Later");
-            }
+            
+           
         }
         [Authorize]
         [HttpPut("{id:int}")]
@@ -94,8 +80,7 @@ namespace HotelListing.Controllers
                 _logger.LogError($"Invalid UPDATE attempt in {nameof(UpdateCountry)}");
                 return BadRequest(ModelState);
             }
-            try
-            {
+           
                 var country = await _unitOfWork.Countries.Get(q => q.Id == id);
                 if (country == null)
                 {
@@ -106,13 +91,8 @@ namespace HotelListing.Controllers
                 _unitOfWork.Countries.Update(country);
                 await _unitOfWork.Save();
                 return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                _logger.LogError(ex, $"Something went wrong in the {nameof(UpdateCountry)}");
-                return StatusCode(500, "Internal server error.Please try again Later.");
-            }
+            
+           
         }
         [Authorize]
         [HttpDelete("{id:int}")]
@@ -126,8 +106,7 @@ namespace HotelListing.Controllers
                 _logger.LogError($"Invalid Delete attempt in {nameof(DeleteCountry)}");
                 return BadRequest();
             }
-            try
-            {
+           
                 var country = await _unitOfWork.Hotels.Get(q => q.Id == id);
                 if (country == null)
                 {
@@ -137,13 +116,8 @@ namespace HotelListing.Controllers
                 await _unitOfWork.Countries.Delete(id);
                 await _unitOfWork.Save();
                 return NoContent();
-            }
-            catch (Exception ex)
-            {
-
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(DeleteCountry)}");
-                return StatusCode(500, "Internal Server Error.Please try again later");
-            }
+            
+          
         }
     }
 }
