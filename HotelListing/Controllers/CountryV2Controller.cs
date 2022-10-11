@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelListing.Controllers
 {
+    [ApiVersion("2.0")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class CountryV2Controller : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

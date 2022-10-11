@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
@@ -70,6 +71,7 @@ namespace HotelListing
                 opt.ReportApiVersions= true;
                 opt.AssumeDefaultVersionWhenUnspecified= true;
                 opt.DefaultApiVersion = new ApiVersion(1,0);
+                opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
         }
     }
