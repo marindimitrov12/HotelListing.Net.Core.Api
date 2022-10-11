@@ -44,6 +44,7 @@ builder.Services.AddCors(o => {
 });
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.ConfigureVersioning();
 AddSwaggerDoc(builder.Services);
 
 void AddSwaggerDoc(IServiceCollection services)
