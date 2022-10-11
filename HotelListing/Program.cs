@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using HotelListing;
 using HotelListing.Configurations;
 using HotelListing.Data;
@@ -26,6 +27,9 @@ var connectionString = builder.Configuration.GetConnectionString("sqlConnection"
 builder.Host.UseSerilog();
 
 // Add services to the container.
+builder.Services.AddMemoryCache();
+builder.Services.ConfigureRateLimiting();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers(config=>
 {
     config.CacheProfiles.Add("120SecondsDuration", new CacheProfile
@@ -113,6 +117,7 @@ app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 app.UseResponseCaching();
 app.UseHttpCacheHeaders();
+app.UseIpRateLimiting();
 app.UseAuthorization();
 app.MapControllers();
 try
