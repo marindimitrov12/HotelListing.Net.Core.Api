@@ -50,11 +50,12 @@ builder.Services.AddCors(o => {
         });
 
 });
+
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.ConfigureVersioning();
 AddSwaggerDoc(builder.Services);
-
+builder.Services.ConfigureHttpCacheHeaders();
 void AddSwaggerDoc(IServiceCollection services)
 {
     builder.Services.AddSwaggerGen(c =>
@@ -111,6 +112,7 @@ app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 app.UseResponseCaching();
+app.UseHttpCacheHeaders();
 app.UseAuthorization();
 app.MapControllers();
 try
