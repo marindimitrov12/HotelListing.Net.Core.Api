@@ -4,6 +4,7 @@ using HotelListing.Data;
 using HotelListing.IRepository;
 using HotelListing.Repository;
 using HotelListing.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,13 @@ var connectionString = builder.Configuration.GetConnectionString("sqlConnection"
 builder.Host.UseSerilog();
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(config=>
+{
+    config.CacheProfiles.Add("120SecondsDuration", new CacheProfile
+    {
+        Duration = 120
+    });
+});
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.AddScoped<IAuthManager,AuthManager>();
@@ -34,6 +41,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 builder.Services.ConficureJWt(builder.Configuration);
+builder.Services.AddResponseCaching();
 builder.Services.AddCors(o => {
     o.AddPolicy("CorsPolicy", builder => {
         builder.AllowAnyOrigin()
@@ -102,6 +110,7 @@ app.UseSwaggerUI();
 app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
+app.UseResponseCaching();
 app.UseAuthorization();
 app.MapControllers();
 try
