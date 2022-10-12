@@ -1,17 +1,17 @@
 using AspNetCoreRateLimit;
-using HotelListing;
-using HotelListing.Configurations;
+using HotelListing.Core;
+using HotelListing.Core.Configurations;
+using HotelListing.Core.IRepository;
+using HotelListing.Core.Repository;
+using HotelListing.Core.Services;
 using HotelListing.Data;
-using HotelListing.IRepository;
-using HotelListing.Repository;
-using HotelListing.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Events;
+
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File(
@@ -55,7 +55,7 @@ builder.Services.AddCors(o => {
 
 });
 
-builder.Services.AddAutoMapper(typeof(MapperInitializer));
+builder.Services.ConfigureAuthoMapper();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.ConfigureVersioning();
 AddSwaggerDoc(builder.Services);
