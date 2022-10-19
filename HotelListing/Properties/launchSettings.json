@@ -27,6 +27,17 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "launchBrowser": true,
+      "launchUrl": "https://localhost:7277/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:7277;http://localhost:5277",
+        "KEY": "9fca9e06-7025-4552-ab7c-fbdbc56199e6"
+      },
+      "distributionName": ""
     }
   }
 }

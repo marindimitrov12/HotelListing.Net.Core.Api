@@ -1,10 +1,12 @@
 using AspNetCoreRateLimit;
+using HealthChecks.UI.Client;
 using HotelListing.Core;
 using HotelListing.Core.Configurations;
 using HotelListing.Core.IRepository;
 using HotelListing.Core.Repository;
 using HotelListing.Core.Services;
 using HotelListing.Data;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -102,7 +104,9 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(connectionString );
 });
 
-
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetConnectionString("TestConnection"));
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 var app = builder.Build();
  
 // Configure the HTTP request pipeline.
@@ -120,7 +124,12 @@ app.UseHttpCacheHeaders();
 app.UseIpRateLimiting();
 app.UseAuthorization();
 app.MapControllers();
-try
+app.MapHealthChecks("/healthchecks",new HealthCheckOptions
+{
+    ResponseWriter=UIResponseWriter.WriteHealthCheckUIResponse
+});
+app.MapHealthChecksUI();
+try  
 {
     Log.Information("Aplication is starting");
     app.Run();
