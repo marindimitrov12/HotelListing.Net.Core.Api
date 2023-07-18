@@ -14,3 +14,9 @@
 - Manage Packages with NuGet Manager
 - Understand .NET 5 workflows, tools and application development
 - Setup GitHub for Source Control
+- # Swagger UI
+- ![image](https://github.com/marindimitrov12/HotelListing.Net.Core.Api/assets/63950527/e98e449e-89e3-46cb-8a5c-1e86a34c20fb)
+
+- ![image](https://github.com/marindimitrov12/HotelListing.Net.Core.Api/assets/63950527/4ad38710-0db7-4934-be49-db933f464e3b)
+
+
