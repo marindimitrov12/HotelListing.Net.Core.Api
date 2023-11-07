@@ -2,7 +2,7 @@
 
 # General Requirements
 - Build a fully data driven REST Web API using cutting edge technology
-- Create a database using Entity Framework Core
+- Create a database using Entity Framework Core 
 - Unit Of Work and Generic Repository Pattern
 - Dependency Injection
 - Setup Logging using SeriLog
