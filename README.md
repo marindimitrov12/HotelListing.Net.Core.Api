@@ -6,7 +6,7 @@
 - Unit Of Work and Generic Repository Pattern
 - Dependency Injection
 - Setup Logging using SeriLog
-- Setup API documentation using SwaggerUI
+- Setup API documentation using SwaggerUI 
 - Understand the REST design principles
 - Understand C# 9 and .Net Core Web Syntax
 - Understand user Authentication using JWT (JSON Web Tokens)
